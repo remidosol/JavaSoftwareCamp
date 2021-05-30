@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface JobSeekerService {
 
-    DataResult<List<JobSeeker>> fetch();
+    DataResult<List<JobSeeker>> getAll();
 
     Result signUpAsJobSeeker(JobSeeker jobSeeker);
 

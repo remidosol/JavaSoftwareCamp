@@ -27,10 +27,10 @@ public class JobSeekersController {
     }
 
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/getAll")
     @ApiOperation(value = "Fetch all job seekers")
-    public DataResult<List<JobSeeker>> fetch(){
-        return this.jobSeekerService.fetch();
+    public DataResult<List<JobSeeker>> getAll(){
+        return this.jobSeekerService.getAll();
     }
 
     @PostMapping("/sign_up")
@@ -43,7 +43,7 @@ public class JobSeekersController {
     @GetMapping(value = "/find_by_id")
     @ApiOperation(value = "Find job seeker by ID")
     public @ResponseBody
-    DataResult<Optional<JobSeeker>> findById(@RequestParam String id){
+    DataResult<JobSeeker> findById(@RequestParam String id){
         return this.jobSeekerService.findById(Long.parseLong(id));
     }
 

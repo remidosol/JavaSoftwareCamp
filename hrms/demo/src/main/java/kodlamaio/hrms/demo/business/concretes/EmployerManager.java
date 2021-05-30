@@ -1,6 +1,8 @@
 package kodlamaio.hrms.demo.business.concretes;
 
 import kodlamaio.hrms.demo.business.abstracts.EmployerService;
+import kodlamaio.hrms.demo.core.utilities.results.DataResult;
+import kodlamaio.hrms.demo.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.demo.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.demo.dataAccess.abstracts.UserDao;
 import kodlamaio.hrms.demo.entities.concretes.Employer;
@@ -20,7 +22,7 @@ public class EmployerManager implements EmployerService {
     }
 
     @Override
-    public List<Employer> getAll() {
-        return this.employerDao.findAll();
+    public DataResult<List<Employer>> getAll() {
+        return new SuccessDataResult<List<Employer>>(this.employerDao.findAll(), "All of employers have been listed.");
     }
 }
