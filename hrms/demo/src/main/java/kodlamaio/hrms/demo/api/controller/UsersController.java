@@ -8,6 +8,7 @@ import kodlamaio.hrms.demo.entities.concretes.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,14 +35,14 @@ public class UsersController {
 
     @GetMapping(value = "/find_by_id")
     @ApiOperation(value = "Find user by ID")
-    public @ResponseBody Optional<User> findById(@RequestParam(required = true) String id){
+    public @ResponseBody Optional<User> findById(@Valid @RequestParam String id){
         return this.userService.findById(Long.parseLong(id));
     }
 
 
     @GetMapping(value = "/find_by_email")
     @ApiOperation(value = "Find user by Email")
-    public @ResponseBody Optional<User> findByEmail(@RequestParam(required = true) String email){
+    public @ResponseBody Optional<User> findByEmail(@Valid @RequestParam String email){
         return this.userService.findByEmail(email);
     }
 

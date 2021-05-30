@@ -42,9 +42,8 @@ public class JobSeekersController {
 
     @GetMapping(value = "/find_by_id")
     @ApiOperation(value = "Find job seeker by ID")
-    public @ResponseBody
-    DataResult<JobSeeker> findById(@RequestParam String id){
-        return this.jobSeekerService.findById(Long.parseLong(id));
+    public DataResult<JobSeeker> findById(@Valid @RequestParam Long id){
+        return this.jobSeekerService.findById(id);
     }
 
 

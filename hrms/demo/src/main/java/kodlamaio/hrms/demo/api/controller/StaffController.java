@@ -41,7 +41,7 @@ public class StaffController {
     @GetMapping(value = "/find_by_id")
     @ApiOperation(value = "Find staff member by ID")
     public @ResponseBody
-    DataResult<Optional<Staff>> findById(@RequestParam(required = true) String id){
+    DataResult<Optional<Staff>> findById(@Valid @RequestParam String id){
         return this.staffService.findById(Long.parseLong(id));
     }
 

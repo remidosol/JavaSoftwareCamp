@@ -29,7 +29,7 @@ public class JobPositionsController {
 
 
     @GetMapping(value = "/getAll")
-    @ApiOperation(value = "Fetch all job seekers")
+    @ApiOperation(value = "Fetch all job positions")
     public DataResult<List<JobPosition>> getAll(){
         return this.jobPositionService.getAll();
     }

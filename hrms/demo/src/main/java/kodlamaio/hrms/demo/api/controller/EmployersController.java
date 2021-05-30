@@ -27,7 +27,7 @@ public class EmployersController {
 
 
     @GetMapping(value = "/getAll")
-    @ApiOperation(value = "Fetch all users")
+    @ApiOperation(value = "Fetch all employers")
     public DataResult<List<Employer>> getAll(){
         return this.employerService.getAll();
     }
