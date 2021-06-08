@@ -2,7 +2,6 @@ package kodlamaio.hrms.demo.business.abstracts;
 
 import kodlamaio.hrms.demo.core.utilities.results.DataResult;
 import kodlamaio.hrms.demo.core.utilities.results.Result;
-import kodlamaio.hrms.demo.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.demo.entities.concretes.Advertisement;
 
 import java.util.List;

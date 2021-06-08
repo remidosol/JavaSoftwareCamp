@@ -12,7 +12,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,7 +22,7 @@ import java.util.Set;
 public class Advertisement implements IEntity, Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(value = "Unique id field of advertisement object")
     @Column(name = "id")
     private Long id;
@@ -94,5 +93,5 @@ public class Advertisement implements IEntity, Serializable {
                     CascadeType.MERGE
             },
             mappedBy = "appliedAdvertisements")
-    private Set<JobSeeker> jobSeekers = new HashSet<>();
+    private Set<JobSeeker> jobSeekers;
 }

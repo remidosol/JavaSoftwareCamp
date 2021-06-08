@@ -1,5 +1,6 @@
 package kodlamaio.hrms.demo.api.exceptions;
 
+import kodlamaio.hrms.demo.core.utilities.results.ErrorDataResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,14 +13,17 @@ import java.util.Map;
 public class ValidationExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
+    public ErrorDataResult<Object> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
+
+        Map<String, String> validationErrors = new HashMap<>();
+
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+            validationErrors.put(fieldName, errorMessage);
         });
-        return errors;
+
+        return new ErrorDataResult<Object>(validationErrors, "Validation Errors");
     }
 }

@@ -3,7 +3,6 @@ package kodlamaio.hrms.demo.adapters;
 import kodlamaio.hrms.demo.business.abstracts.MernisService;
 import kodlamaio.hrms.demo.core.utilities.results.Result;
 import kodlamaio.hrms.demo.entities.concretes.JobSeeker;
-
 import kodlamaio.hrms.demo.tr.gov.nvi.tckimlik.ws.KPSPublic;
 import kodlamaio.hrms.demo.tr.gov.nvi.tckimlik.ws.KPSPublicSoap;
 

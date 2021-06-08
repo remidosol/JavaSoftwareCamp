@@ -1,7 +1,11 @@
 package kodlamaio.hrms.demo.entities.concretes;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import kodlamaio.hrms.demo.core.entities.User;
+import kodlamaio.hrms.demo.entities.abstracts.IEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,10 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.Set;
-
-import kodlamaio.hrms.demo.entities.abstracts.IEntity;
 
 @Entity
 @Table(name = "job_seekers")
@@ -23,7 +24,7 @@ import kodlamaio.hrms.demo.entities.abstracts.IEntity;
 @NoArgsConstructor @AllArgsConstructor
 public class JobSeeker implements IEntity, Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @ApiModelProperty(value = "Unique id field of job seeker object")
     private Long id;
@@ -46,7 +47,7 @@ public class JobSeeker implements IEntity, Serializable {
     private String lastName;
 
     @NotNull
-    @Column(name = "national_id")
+    @Column(name = "national_id", unique = true)
     @Size(min = 11, max = 11)
     @NotNull(message = "National ID is mandatory.")
     @NotEmpty(message = "National ID is mandatory.")
@@ -82,10 +83,9 @@ public class JobSeeker implements IEntity, Serializable {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", unique = true)
     @ApiModelProperty(value = "user field of job seeker object")
     private User user;
-
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -97,5 +97,10 @@ public class JobSeeker implements IEntity, Serializable {
                     { @JoinColumn(name = "job_seeker_id", referencedColumnName = "id") },
             inverseJoinColumns =
                     { @JoinColumn(name = "advertisement_id", referencedColumnName = "id") })
-    private Set<Advertisement> appliedAdvertisements = new HashSet<Advertisement>(0);
+    private Set<Advertisement> appliedAdvertisements;
+
+
+    @OneToOne(mappedBy = "jobSeeker")
+    @PrimaryKeyJoinColumn
+    private CurriculumVitae curriculumVitae;
 }

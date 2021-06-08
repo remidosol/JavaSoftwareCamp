@@ -1,9 +1,12 @@
 package kodlamaio.hrms.demo.entities.concretes;
 
 import io.swagger.annotations.ApiModelProperty;
+import kodlamaio.hrms.demo.core.entities.User;
 import kodlamaio.hrms.demo.entities.abstracts.IEntity;
 import kodlamaio.hrms.demo.utils.Enums;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -22,7 +25,7 @@ import java.sql.Date;
 public class Staff implements IEntity, Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @ApiModelProperty(value = "Unique id field of staff object")
     private Long id;
@@ -57,7 +60,7 @@ public class Staff implements IEntity, Serializable {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", unique = true)
     @ApiModelProperty(value = "user field of staff object")
     private User user;
 }

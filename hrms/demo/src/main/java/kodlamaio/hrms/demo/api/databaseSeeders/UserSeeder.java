@@ -1,8 +1,8 @@
 package kodlamaio.hrms.demo.api.databaseSeeders;
 
 import com.github.javafaker.Faker;
-import kodlamaio.hrms.demo.dataAccess.abstracts.UserDao;
-import kodlamaio.hrms.demo.entities.concretes.User;
+import kodlamaio.hrms.demo.core.dataAccess.UserDao;
+import kodlamaio.hrms.demo.core.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

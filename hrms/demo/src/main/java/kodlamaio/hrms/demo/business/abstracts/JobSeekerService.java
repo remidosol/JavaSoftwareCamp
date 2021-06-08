@@ -3,13 +3,9 @@ package kodlamaio.hrms.demo.business.abstracts;
 
 import kodlamaio.hrms.demo.core.utilities.results.DataResult;
 import kodlamaio.hrms.demo.core.utilities.results.Result;
-import kodlamaio.hrms.demo.entities.concretes.Advertisement;
 import kodlamaio.hrms.demo.entities.concretes.JobSeeker;
-import kodlamaio.hrms.demo.entities.concretes.User;
 
-import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 public interface JobSeekerService {
 

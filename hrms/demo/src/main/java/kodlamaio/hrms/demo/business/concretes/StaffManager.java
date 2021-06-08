@@ -9,7 +9,6 @@ import kodlamaio.hrms.demo.entities.concretes.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 

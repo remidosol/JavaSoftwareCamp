@@ -3,8 +3,8 @@ package kodlamaio.hrms.demo.api.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kodlamaio.hrms.demo.business.abstracts.UserService;
+import kodlamaio.hrms.demo.core.entities.User;
 import kodlamaio.hrms.demo.core.utilities.results.DataResult;
-import kodlamaio.hrms.demo.entities.concretes.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -7,4 +7,18 @@ public class Enums {
         DEVELOPER,
         OWNER
     }
+
+    public enum TechGrade {
+        BEGINNER,
+        INTERMEDIATE,
+        EXPERT
+    }
+
+    public enum LangGrade {
+        BEGINNER,
+        PRE_INTERMEDIATE,
+        INTERMEDIATE,
+        UPPER_INTERMEDIATE,
+        ADVANCED
+    }
 }

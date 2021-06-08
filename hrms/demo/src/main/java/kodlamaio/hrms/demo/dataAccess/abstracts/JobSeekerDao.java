@@ -19,4 +19,9 @@ public interface JobSeekerDao extends JpaRepository<JobSeeker, Integer> {
     Optional<JobSeeker> findById(Long id);
 
     Optional<JobSeeker> getByUserId_UserId(Long userId);
+
+//    @Query("SELECT new kodlamaio.hrms.demo.entities.dtos.UniversityWithDepartmentDto"
+//            + "(j.id, u.name, d.name) "
+//            + "FROM University u, Department d INNER JOIN JobSeeker j")
+//    List<UniversityWithDepartmentDto> getUniversityWithDepartmentDetails();
 }

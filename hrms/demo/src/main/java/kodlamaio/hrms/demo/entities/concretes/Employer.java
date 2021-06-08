@@ -1,8 +1,12 @@
 package kodlamaio.hrms.demo.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
+import kodlamaio.hrms.demo.core.entities.User;
 import kodlamaio.hrms.demo.entities.abstracts.IEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,27 +15,28 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "employers")
 @Data
 @NoArgsConstructor @AllArgsConstructor
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "advertisements" })
 public class Employer implements IEntity, Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @ApiModelProperty(value = "Unique id field of employer object")
     private Long id;
 
     @NotNull
-    @Column(name = "company_name")
+    @Column(name = "company_name", unique = true)
     @Size(min = 2, message = "Your company name must be grater than 2 chars.")
     @ApiModelProperty(value = "companyName field of employer object")
     private String companyName;
 
     @NotNull
-    @Column(name = "mobile_number")
+    @Column(name = "mobile_number", unique = true)
     @ApiModelProperty(value = "Unique mobileNumber field of employer object")
     private String mobileNumber;
 
@@ -62,11 +67,11 @@ public class Employer implements IEntity, Serializable {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", unique = true)
     @ApiModelProperty(value = "user field of employer object")
     private User user;
 
     @OneToMany(mappedBy="employer")
     @ApiModelProperty(value = "advertisements of employer object")
-    private List<Advertisement> advertisements;
+    private Set<Advertisement> advertisements;
 }
