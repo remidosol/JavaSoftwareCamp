@@ -3,10 +3,12 @@ package kodlamaio.hrms.demo.dataAccess.abstracts;
 import kodlamaio.hrms.demo.entities.concretes.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface StaffDao extends JpaRepository<Staff, Integer> {
 
     @Query("SELECT t FROM Staff t WHERE t.firstName = ?1")

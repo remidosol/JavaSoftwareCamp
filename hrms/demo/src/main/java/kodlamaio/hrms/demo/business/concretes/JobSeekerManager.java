@@ -1,22 +1,19 @@
 package kodlamaio.hrms.demo.business.concretes;
 
-import kodlamaio.hrms.demo.adapters.MernisServiceAdapter;
 import kodlamaio.hrms.demo.business.abstracts.JobSeekerService;
-import kodlamaio.hrms.demo.business.abstracts.MernisService;
-import kodlamaio.hrms.demo.core.utilities.results.*;
+import kodlamaio.hrms.demo.core.utilities.results.DataResult;
+import kodlamaio.hrms.demo.core.utilities.results.Result;
+import kodlamaio.hrms.demo.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.demo.dataAccess.abstracts.AdvertisementDao;
 import kodlamaio.hrms.demo.dataAccess.abstracts.JobSeekerDao;
+import kodlamaio.hrms.demo.dataAccess.abstracts.linkDaos.JobSeekerAdvertisementLinkDao;
 import kodlamaio.hrms.demo.entities.concretes.Advertisement;
 import kodlamaio.hrms.demo.entities.concretes.JobSeeker;
-import kodlamaio.hrms.demo.utils.MernisSeviceUtils;
+import kodlamaio.hrms.demo.entities.concretes.links.JobSeekerAdvertisementLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class JobSeekerManager implements JobSeekerService {
@@ -25,10 +22,13 @@ public class JobSeekerManager implements JobSeekerService {
 
     private AdvertisementDao advertisementDao;
 
+    private JobSeekerAdvertisementLinkDao jobSeekerAdvertisementLinkDao;
+
     @Autowired
-    public JobSeekerManager(JobSeekerDao jobSeekerDao, AdvertisementDao advertisementDao) {
+    public JobSeekerManager(JobSeekerDao jobSeekerDao, AdvertisementDao advertisementDao, JobSeekerAdvertisementLinkDao jobSeekerAdvertisementLinkDao) {
         this.jobSeekerDao = jobSeekerDao;
         this.advertisementDao = advertisementDao;
+        this.jobSeekerAdvertisementLinkDao = jobSeekerAdvertisementLinkDao;
     }
 
     @Override
@@ -38,71 +38,41 @@ public class JobSeekerManager implements JobSeekerService {
     }
 
     @Override
-    public Result signUpAsJobSeeker(JobSeeker jobSeeker) {
+    public DataResult<JobSeeker> getById(Long id) {
 
-        MernisService mernisService = new MernisManager(new MernisServiceAdapter());
-
-        Result result = MernisSeviceUtils.runMernisServices(new Result[]{
-                mernisService.CheckIfJobSeekerIsRealPerson(jobSeeker),
-                this.CheckIfYoungerAgeThan(jobSeeker, 18)
-        });
-
-        if (!result.isSuccess()) {
-            System.out.println(result.getMessage());
-            return new ErrorResult("Your id verification is unsuccessful according to your given info.");
-        } else {
-            this.jobSeekerDao.save(jobSeeker);
-            return new SuccessResult("You are successfully signed up.");
-        }
-
-    }
-
-    @Override
-    public DataResult<JobSeeker> findById(Long id) {
-
-        return new SuccessDataResult<JobSeeker>(this.jobSeekerDao.findById(id).get(), "Data have been listed.");
+        return new SuccessDataResult<JobSeeker>(this.jobSeekerDao.getById(id), "Data have been listed.");
     }
 
     @Override
     public DataResult<JobSeeker> getByUserId_UserId(Long userId) {
         return new SuccessDataResult<JobSeeker>(
                 this.jobSeekerDao.getByUserId_UserId(
-                        userId).get(),
+                        userId),
                 "Data have been listed.");
     }
 
     @Override
     public DataResult<List<JobSeeker>> findByFirstNameIgnoreCase(String firstName) {
-        return new SuccessDataResult<List<JobSeeker>>(this.jobSeekerDao.getByFirstNameIgnoreCase(firstName).get(), "Data have been listed.");
+        return new SuccessDataResult<List<JobSeeker>>(this.jobSeekerDao.getByFirstNameIgnoreCase(firstName), "Data have been listed.");
     }
 
     @Override
     public DataResult<List<JobSeeker>> findByLastNameIgnoreCase(String lastName) {
-        return new SuccessDataResult<List<JobSeeker>>(this.jobSeekerDao.getByLastNameIgnoreCase(lastName).get(), "Data have been listed.");
-    }
-
-    @Override
-    public Result CheckIfYoungerAgeThan(JobSeeker jobSeeker, int age) {
-        LocalDate todayDateTime = LocalDate.now();
-        LocalDate birthDate = jobSeeker.getDateOfBirth().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int yearDifference = Period.between(birthDate, todayDateTime).getYears();
-        if (yearDifference < age) {
-            return new Result(false, "Person's age can't be smaller than " + age);
-        }
-        return new Result(true);
+        return new SuccessDataResult<List<JobSeeker>>(this.jobSeekerDao.getByLastNameIgnoreCase(lastName), "Data have been listed.");
     }
 
     @Override
     public Result applyAnAdvertisement(Long jobSeekerId, Long advertisementId) {
 
-        Optional<JobSeeker> foundJobSeeker = this.jobSeekerDao.findById(jobSeekerId);
-        Optional<Advertisement> foundAd = this.advertisementDao.findById(advertisementId);
+        JobSeeker foundJobSeeker = this.jobSeekerDao.getById(jobSeekerId);
+        Advertisement foundAd = this.advertisementDao.getById(advertisementId);
 
-        foundJobSeeker.get().getAppliedAdvertisements().add(foundAd.get());
-        foundAd.get().getJobSeekers().add(foundJobSeeker.get());
+        JobSeekerAdvertisementLink newRel = new JobSeekerAdvertisementLink();
 
-        this.jobSeekerDao.saveAndFlush(foundJobSeeker.get());
-        this.advertisementDao.saveAndFlush(foundAd.get());
-        return new SuccessDataResult<JobSeeker>(foundJobSeeker.get(), "You successfully applied to advertisement.");
+        newRel.setAdvertisement(foundAd);
+        newRel.setJobSeeker(foundJobSeeker);
+
+        this.jobSeekerAdvertisementLinkDao.saveAndFlush(newRel);
+        return new SuccessDataResult<JobSeekerAdvertisementLink>(newRel, "You successfully applied to advertisement.");
     }
 }

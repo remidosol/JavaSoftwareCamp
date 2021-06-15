@@ -1,7 +1,9 @@
 package kodlamaio.hrms.demo.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import kodlamaio.hrms.demo.entities.abstracts.IEntity;
+import kodlamaio.hrms.demo.entities.concretes.links.JobSeekerAdvertisementLink;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,17 +14,18 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "advertisements")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jobSeekers"})
 public class Advertisement implements IEntity, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @ApiModelProperty(value = "Unique id field of advertisement object")
     @Column(name = "id")
     private Long id;
@@ -87,11 +90,6 @@ public class Advertisement implements IEntity, Serializable {
     @ApiModelProperty(value = "city field of advertisement object")
     private City city;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "appliedAdvertisements")
-    private Set<JobSeeker> jobSeekers;
+    @OneToMany(mappedBy = "advertisement", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<JobSeekerAdvertisementLink> jobSeekerLink;
 }

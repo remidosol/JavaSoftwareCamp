@@ -6,6 +6,7 @@ import kodlamaio.hrms.demo.dataAccess.abstracts.AdvertisementDao;
 import kodlamaio.hrms.demo.entities.concretes.Advertisement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +40,12 @@ public class AdvertisementManager implements AdvertisementService {
     }
 
     @Override
+    public DataResult<Advertisement> getById(Long id) {
+
+        return new SuccessDataResult<Advertisement>(this.advertisementDao.getById(id), "Data have been listed.");
+    }
+
+    @Override
     public DataResult<List<Advertisement>> getByEmployer_EmployerId(Long employerId) {
 
         return new SuccessDataResult<List<Advertisement>>(this.advertisementDao.getByEmployer_EmployerId(employerId),
@@ -48,7 +55,7 @@ public class AdvertisementManager implements AdvertisementService {
     @Override
     public Result setAdvertisementPassive(Long advertisementId) {
 
-        Advertisement ad = this.advertisementDao.findById(advertisementId).get();
+        Advertisement ad = this.advertisementDao.getById(advertisementId);
         if (ad.isActive()) {
             ad.setActive(false);
 
@@ -64,4 +71,5 @@ public class AdvertisementManager implements AdvertisementService {
         this.advertisementDao.save(advertisement);
         return new SuccessResult("Advertisement has been added.");
     }
+
 }

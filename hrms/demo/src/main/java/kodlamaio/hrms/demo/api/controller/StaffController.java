@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/staff")
+@CrossOrigin
 @Api(value = "Staff Controller Docs")
 public class StaffController {
 
@@ -28,7 +29,7 @@ public class StaffController {
 
     @GetMapping(value = "/")
     @ApiOperation(value = "Fetch all staff members")
-    public DataResult<List<Staff>> fetch(){
+    public DataResult<List<Staff>> fetch() {
         return this.staffService.fetch();
     }
 
@@ -36,13 +37,13 @@ public class StaffController {
     @GetMapping(value = "/find_by_id")
     @ApiOperation(value = "Find staff member by ID")
     public @ResponseBody
-    DataResult<Optional<Staff>> findById(@Valid @RequestParam String id){
+    DataResult<Optional<Staff>> findById(@Valid @RequestParam String id) {
         return this.staffService.findById(Long.parseLong(id));
     }
 
     @PostMapping("/add")
     @ApiOperation(value = "Add staff member")
-    public Result signUpAsJobSeeker(@Valid @RequestBody Staff staff){
+    public Result signUpAsJobSeeker(@Valid @RequestBody Staff staff) {
         return this.staffService.create(staff);
     }
 }

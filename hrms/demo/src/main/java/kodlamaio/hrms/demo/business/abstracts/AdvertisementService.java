@@ -13,6 +13,8 @@ public interface AdvertisementService {
 
     DataResult<List<Advertisement>> getAllSorted();
 
+    DataResult<Advertisement> getById(Long id);
+
     DataResult<List<Advertisement>> getByEmployer_EmployerId(Long employerId);
 
     Result setAdvertisementPassive(Long advertisementId);

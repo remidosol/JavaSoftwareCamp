@@ -3,7 +3,7 @@ package kodlamaio.hrms.demo.entities.concretes;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import kodlamaio.hrms.demo.entities.abstracts.IEntity;
-import kodlamaio.hrms.demo.entities.concretes.links.CVUniversityDepartmentLink;
+import kodlamaio.hrms.demo.entities.concretes.links.CurriculumVitaeUniversityDepartmentLink;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +18,11 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "educations" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "educations"})
 public class Department implements IEntity, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @ApiModelProperty(value = "Unique id field of department object")
     @Column(name = "id")
     private Long id;
@@ -33,5 +33,5 @@ public class Department implements IEntity, Serializable {
     private String name;
 
     @OneToMany(mappedBy = "department")
-    private Set<CVUniversityDepartmentLink> educations;
+    private Set<CurriculumVitaeUniversityDepartmentLink> educations;
 }

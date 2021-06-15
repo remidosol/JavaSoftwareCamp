@@ -3,9 +3,9 @@ package kodlamaio.hrms.demo.entities.concretes;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import kodlamaio.hrms.demo.entities.abstracts.IEntity;
-import kodlamaio.hrms.demo.entities.concretes.links.CVLanguageLink;
-import kodlamaio.hrms.demo.entities.concretes.links.CVTechnologyLink;
-import kodlamaio.hrms.demo.entities.concretes.links.CVUniversityDepartmentLink;
+import kodlamaio.hrms.demo.entities.concretes.links.CurriculumVitaeLanguageLink;
+import kodlamaio.hrms.demo.entities.concretes.links.CurriculumVitaeTechnologyLink;
+import kodlamaio.hrms.demo.entities.concretes.links.CurriculumVitaeUniversityDepartmentLink;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,11 +22,11 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "jobSeeker" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jobSeeker"})
 public class CurriculumVitae implements IEntity, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @ApiModelProperty(value = "Unique id field of curriculum vitae object")
     @Column(name = "id")
     private Long id;
@@ -60,15 +60,15 @@ public class CurriculumVitae implements IEntity, Serializable {
     private JobSeeker jobSeeker;
 
 
-    @OneToMany(mappedBy = "curriculumVitae")
-    private Set<CVUniversityDepartmentLink> educations;
+    @OneToMany(mappedBy = "curriculumVitae", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<CurriculumVitaeUniversityDepartmentLink> educations;
 
-    @OneToMany(mappedBy = "curriculumVitae")
-    private Set<CVTechnologyLink> cvTechs;
+    @OneToMany(mappedBy = "curriculumVitae", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<CurriculumVitaeTechnologyLink> cvTechs;
 
-    @OneToMany(mappedBy = "curriculumVitae")
-    private Set<CVLanguageLink> cvLangs;
+    @OneToMany(mappedBy = "curriculumVitae", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<CurriculumVitaeLanguageLink> cvLangs;
 
-    @OneToMany(mappedBy = "curriculumVitae")
+    @OneToMany(mappedBy = "curriculumVitae", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Experience> experiences;
 }

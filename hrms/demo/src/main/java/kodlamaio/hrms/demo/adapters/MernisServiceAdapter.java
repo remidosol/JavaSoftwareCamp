@@ -13,7 +13,7 @@ public class MernisServiceAdapter implements MernisService {
     public Result CheckIfJobSeekerIsRealPerson(JobSeeker jobSeeker) {
         KPSPublic service = new KPSPublic();
         KPSPublicSoap kpsPublicSoapProxy = service.getKPSPublicSoap();
-        boolean result = true;
+        boolean result = false;
 
         try {
             result = kpsPublicSoapProxy.tcKimlikNoDogrula(

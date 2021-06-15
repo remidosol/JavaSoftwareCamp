@@ -4,7 +4,10 @@ import kodlamaio.hrms.demo.business.abstracts.MernisService;
 import kodlamaio.hrms.demo.core.utilities.results.Result;
 import kodlamaio.hrms.demo.entities.concretes.JobSeeker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class MernisManager implements MernisService {
 
     private MernisService mernisService;

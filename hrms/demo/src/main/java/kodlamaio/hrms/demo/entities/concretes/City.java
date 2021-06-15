@@ -17,11 +17,11 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "advertisements", "experiences" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "advertisements", "experiences"})
 public class City implements IEntity, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @ApiModelProperty(value = "Unique id field of city object")
     @Column(name = "id")
     private Long id;
@@ -31,11 +31,11 @@ public class City implements IEntity, Serializable {
     @Column(name = "city_name", unique = true)
     private String cityName;
 
-    @OneToMany(mappedBy="city")
+    @OneToMany(mappedBy = "city")
     @ApiModelProperty(value = "advertisements of city object")
     private Set<Advertisement> advertisements;
 
-    @OneToMany(mappedBy="city")
+    @OneToMany(mappedBy = "city")
     @ApiModelProperty(value = "experiences of city object")
     private Set<Experience> experiences;
 }

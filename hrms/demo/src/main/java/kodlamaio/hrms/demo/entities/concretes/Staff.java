@@ -2,8 +2,8 @@ package kodlamaio.hrms.demo.entities.concretes;
 
 import io.swagger.annotations.ApiModelProperty;
 import kodlamaio.hrms.demo.core.entities.User;
+import kodlamaio.hrms.demo.core.enums.RoleEnums;
 import kodlamaio.hrms.demo.entities.abstracts.IEntity;
-import kodlamaio.hrms.demo.utils.Enums;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ import java.sql.Date;
 public class Staff implements IEntity, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "id")
     @ApiModelProperty(value = "Unique id field of staff object")
     private Long id;
@@ -42,11 +42,11 @@ public class Staff implements IEntity, Serializable {
     @ApiModelProperty(value = "lastName field of staff object")
     private String lastName;
 
-    @NotNull
-    @Column(name = "role")
-    @Enumerated(EnumType.ORDINAL)
-    @ApiModelProperty(value = "Enumerated role field of staff object")
-    private Enums.Roles role;
+//    @NotNull
+//    @Column(name = "role")
+//    @Enumerated(EnumType.ORDINAL)
+//    @ApiModelProperty(value = "Enumerated role field of staff object")
+//    private RoleEnums.StaffRoles role;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -58,9 +58,8 @@ public class Staff implements IEntity, Serializable {
     @ApiModelProperty(value = "updatedAt field of staff object")
     private Date updatedAt;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id", unique = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ApiModelProperty(value = "user field of staff object")
     private User user;
 }

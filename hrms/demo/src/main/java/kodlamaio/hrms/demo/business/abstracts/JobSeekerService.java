@@ -11,17 +11,13 @@ public interface JobSeekerService {
 
     DataResult<List<JobSeeker>> getAll();
 
-    Result signUpAsJobSeeker(JobSeeker jobSeeker);
-
-    DataResult<JobSeeker> findById(Long id);
+    DataResult<JobSeeker> getById(Long id);
 
     DataResult<JobSeeker> getByUserId_UserId(Long id);
 
     DataResult<List<JobSeeker>> findByFirstNameIgnoreCase(String firstName);
 
     DataResult<List<JobSeeker>> findByLastNameIgnoreCase(String lastName);
-
-    Result CheckIfYoungerAgeThan(JobSeeker jobSeeker, int age);
 
     Result applyAnAdvertisement(Long jobSeekerId, Long advertisementId);
 

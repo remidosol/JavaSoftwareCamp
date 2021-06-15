@@ -19,11 +19,11 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "curriculumVitae" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "curriculumVitae"})
 public class Experience implements IEntity, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @ApiModelProperty(value = "Unique id field of experience object")
     @Column(name = "id")
     private String id;

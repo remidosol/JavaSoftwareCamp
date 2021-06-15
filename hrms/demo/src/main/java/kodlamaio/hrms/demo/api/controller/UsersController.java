@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin
 @Api(value = "User Controller Docs")
 public class UsersController {
 
@@ -25,24 +26,25 @@ public class UsersController {
         this.userService = userService;
     }
 
-
     @GetMapping(value = "/")
     @ApiOperation(value = "Fetch all users")
-    public DataResult<List<User>> fetch(){
-        return this.userService.fetch();
+    public DataResult<List<User>> getAll() {
+        return this.userService.getAll();
     }
 
 
     @GetMapping(value = "/find_by_id")
     @ApiOperation(value = "Find user by ID")
-    public @ResponseBody Optional<User> findById(@Valid @RequestParam String id){
+    public @ResponseBody
+    Optional<User> findById(@Valid @RequestParam String id) {
         return this.userService.findById(Long.parseLong(id));
     }
 
 
     @GetMapping(value = "/find_by_email")
     @ApiOperation(value = "Find user by Email")
-    public @ResponseBody Optional<User> findByEmail(@Valid @RequestParam String email){
+    public @ResponseBody
+    Optional<User> findByEmail(@Valid @RequestParam String email) {
         return this.userService.findByEmail(email);
     }
 

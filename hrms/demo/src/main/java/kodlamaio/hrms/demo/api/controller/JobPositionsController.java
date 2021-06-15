@@ -6,6 +6,7 @@ import kodlamaio.hrms.demo.business.abstracts.JobPositionService;
 import kodlamaio.hrms.demo.core.utilities.results.DataResult;
 import kodlamaio.hrms.demo.entities.concretes.JobPosition;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/job_positions")
+@CrossOrigin
 @Api(value = "Job Positions Controller Docs")
 public class JobPositionsController {
 
@@ -28,7 +30,7 @@ public class JobPositionsController {
 
     @GetMapping(value = "/getAll")
     @ApiOperation(value = "Fetch all job positions")
-    public DataResult<List<JobPosition>> getAll(){
+    public DataResult<List<JobPosition>> getAll() {
         return this.jobPositionService.getAll();
     }
 }

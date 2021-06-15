@@ -3,7 +3,7 @@ package kodlamaio.hrms.demo.entities.concretes;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import kodlamaio.hrms.demo.entities.abstracts.IEntity;
-import kodlamaio.hrms.demo.entities.concretes.links.CVTechnologyLink;
+import kodlamaio.hrms.demo.entities.concretes.links.CurriculumVitaeTechnologyLink;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +18,11 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "cvTechnology" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "cvTechnology"})
 public class Technology implements IEntity, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @ApiModelProperty(value = "Unique id field of technology object")
     @Column(name = "id")
     private Long id;
@@ -33,5 +33,5 @@ public class Technology implements IEntity, Serializable {
     private String techName;
 
     @OneToMany(mappedBy = "technology")
-    private Set<CVTechnologyLink> cvTechnology;
+    private Set<CurriculumVitaeTechnologyLink> cvTechnology;
 }

@@ -1,8 +1,10 @@
 package kodlamaio.hrms.demo.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import kodlamaio.hrms.demo.core.entities.User;
 import kodlamaio.hrms.demo.entities.abstracts.IEntity;
+import kodlamaio.hrms.demo.entities.concretes.links.JobSeekerAdvertisementLink;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,15 +18,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "job_seekers")
 @Data
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "user"})
 public class JobSeeker implements IEntity, Serializable {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "id")
     @ApiModelProperty(value = "Unique id field of job seeker object")
     private Long id;
@@ -63,9 +68,17 @@ public class JobSeeker implements IEntity, Serializable {
     @ApiModelProperty(value = "dateOfBirth field of job seeker object")
     private Date dateOfBirth;
 
+    @Column(name = "avatar_url")
+    @ApiModelProperty(value = "Avatar URL field of job seeker object")
+    private String avatarUrl;
+
     @Column(name = "is_email_confirmed", nullable = false, columnDefinition = "boolean default false")
     @ApiModelProperty(value = "isEmailConfirmed field of job seeker object")
     private boolean isEmailConfirmed;
+
+    @Column(name = "is_confirmed_with_mernis", nullable = false, columnDefinition = "boolean default false")
+    @ApiModelProperty(value = "isConfirmedWithMernis field of job seeker object")
+    private boolean isConfirmedWithMernis;
 
     @Column(name = "is_active", nullable = false, columnDefinition = "boolean default false")
     @ApiModelProperty(value = "isActive field of job seeker object")
@@ -81,26 +94,15 @@ public class JobSeeker implements IEntity, Serializable {
     @ApiModelProperty(value = "updatedAt field of job seeker object")
     private Date updatedAt;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id", unique = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ApiModelProperty(value = "user field of job seeker object")
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "pivot_job_seeker_advertisements",
-            joinColumns =
-                    { @JoinColumn(name = "job_seeker_id", referencedColumnName = "id") },
-            inverseJoinColumns =
-                    { @JoinColumn(name = "advertisement_id", referencedColumnName = "id") })
-    private Set<Advertisement> appliedAdvertisements;
+    @OneToMany(mappedBy = "jobSeeker", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobSeekerAdvertisementLink> advertisementLink;
 
-
-    @OneToOne(mappedBy = "jobSeeker")
+    @OneToOne(mappedBy = "jobSeeker", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @PrimaryKeyJoinColumn
     private CurriculumVitae curriculumVitae;
 }

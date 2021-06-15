@@ -20,11 +20,12 @@ import java.util.Set;
 @Entity
 @Table(name = "employers")
 @Data
-@NoArgsConstructor @AllArgsConstructor
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "advertisements" })
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "advertisements"})
 public class Employer implements IEntity, Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "id")
     @ApiModelProperty(value = "Unique id field of employer object")
     private Long id;
@@ -65,13 +66,12 @@ public class Employer implements IEntity, Serializable {
     @ApiModelProperty(value = "updatedAt field of employer object")
     private Date updatedAt;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id", unique = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ApiModelProperty(value = "user field of employer object")
     private User user;
 
-    @OneToMany(mappedBy="employer")
+    @OneToMany(mappedBy = "employer")
     @ApiModelProperty(value = "advertisements of employer object")
     private Set<Advertisement> advertisements;
 }

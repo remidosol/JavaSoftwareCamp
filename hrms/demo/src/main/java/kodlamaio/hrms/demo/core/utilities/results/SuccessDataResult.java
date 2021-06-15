@@ -1,6 +1,6 @@
 package kodlamaio.hrms.demo.core.utilities.results;
 
-public class SuccessDataResult<T> extends DataResult<T>{
+public class SuccessDataResult<T> extends DataResult<T> {
 
     public SuccessDataResult(T data) {
         super(data, true);

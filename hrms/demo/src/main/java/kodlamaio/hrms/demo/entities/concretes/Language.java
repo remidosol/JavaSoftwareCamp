@@ -3,7 +3,7 @@ package kodlamaio.hrms.demo.entities.concretes;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import kodlamaio.hrms.demo.entities.abstracts.IEntity;
-import kodlamaio.hrms.demo.entities.concretes.links.CVLanguageLink;
+import kodlamaio.hrms.demo.entities.concretes.links.CurriculumVitaeLanguageLink;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +18,11 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "cvLanguage" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "cvLanguage"})
 public class Language implements IEntity, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @ApiModelProperty(value = "Unique id field of language object")
     @Column(name = "id")
     private String id;
@@ -33,5 +33,5 @@ public class Language implements IEntity, Serializable {
     private String language;
 
     @OneToMany(mappedBy = "language")
-    private Set<CVLanguageLink> cvLanguage;
+    private Set<CurriculumVitaeLanguageLink> cvLanguage;
 }

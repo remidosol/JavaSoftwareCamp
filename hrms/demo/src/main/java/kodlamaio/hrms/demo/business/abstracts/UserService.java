@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    DataResult<List<User>> fetch();
+    DataResult<List<User>> getAll();
 
     Optional<User> findById(Long id);
 
