@@ -1,4 +1,4 @@
-package kodlamaio.hrms.demo.api.exceptions;
+package kodlamaio.hrms.demo.core.api.exceptionHandlers;
 
 import kodlamaio.hrms.demo.core.utilities.results.ErrorDataResult;
 import org.springframework.http.HttpStatus;
